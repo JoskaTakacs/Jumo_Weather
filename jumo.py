@@ -28,7 +28,7 @@ def jumo_weather(ack, body):
         jumo_weather_results = get_city_weather(lat, lon)  # Execute API calls to get weather results from coordinates.
         city_weather = json.loads(jumo_weather_results.text)
         user_id = body["user_id"]
-        ack(f"Hi <@{user_id}>! Here are your results for {city_weather['name']}, "
+        ack(f"Hi <@{user_id}>! \nHere are your results for {city_weather['name']}, "
             f"{city_weather['sys']['country']}: "
             f"\nThe weather conditions are: {city_weather['weather'][0]['description']} \n"
             f"\nand the temperature is: {round(city_weather['main']['temp'] - 273.15)}C.\n"
