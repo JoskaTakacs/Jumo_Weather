@@ -10,6 +10,7 @@ export SLACK_BOT_TOKEN=xoxb-<your-bot-token>
 export SLACK_APP_TOKEN=<your-app-level-token>
 export openweathermap=<your-open-weather-map-token>
 '''
+
 try:
     app = App(token=os.environ['SLACK_BOT_TOKEN'], signing_secret=os.environ['SLACK_APP_TOKEN'])
 except KeyError:
