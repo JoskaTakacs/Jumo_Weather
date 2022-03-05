@@ -4,26 +4,17 @@ from slack_bolt import App
 import os
 
 '''
-#https://slack.dev/bolt-python/tutorial/getting-started
-#https://slack.dev/bolt-python/concepts
+Export Slack and openweathermap API keys as follows:
 
-#export SLACK_BOT_TOKEN=xoxb-<your-bot-token>
-#export SLACK_APP_TOKEN=<your-app-level-token>
+export SLACK_BOT_TOKEN=xoxb-<your-bot-token>
+export SLACK_APP_TOKEN=<your-app-level-token>
+export openweathermap=<your-open-weather-map-token>
 '''
 
 app = App(token=os.environ['SLACK_BOT_TOKEN'], signing_secret=os.environ['SLACK_APP_TOKEN'])
 
-'''
-@app.command("/jumo_weather")
-def slack_command(ack, respond, command, body):
-    # Acknowledge command request
-    ack()
-    print(body)
-    respond(f"{command['text']}")
-'''
 
-
-@app.command("/jumo_weather")
+@app.command("/jumo_weather")  # listen for "/jumo_weather" commands from slack
 def jumo_weather(ack, body):
     city = body['text']
     weather = get_coordinates(city)  # Execute weather api to get coordinates of City.
@@ -56,4 +47,4 @@ def get_city_weather(lat, lon, weather_api=os.environ['openweathermap']):
 
 
 if __name__ == "__main__":
-    app.start(3000)  # POST http://localhost:3000/slack/eventsl
+    app.start(3000)  # POST http://localhost:3000/slack/events
