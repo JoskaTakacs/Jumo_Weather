@@ -3,6 +3,7 @@ import requests
 from slack_bolt import App
 import os
 
+# noinspection SpellCheckingInspection
 '''
 Export Slack and openweathermap API keys as follows:
 
@@ -24,7 +25,7 @@ def jumo_weather(ack, body):
         coordinates_json = json.loads(weather.text)
         lat = coordinates_json[0]['lat']
         lon = coordinates_json[0]['lon']
-        jumo_weather_results = get_city_weather(lat, lon)  # Execute API call to get weather results from coordinates.
+        jumo_weather_results = get_city_weather(lat, lon)  # Execute API calls to get weather results from coordinates.
         city_weather = json.loads(jumo_weather_results.text)
         user_id = body["user_id"]
         ack(f"Hi <@{user_id}>! Here are your results for {city_weather['name']}, "
