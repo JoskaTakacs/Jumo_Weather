@@ -3,7 +3,6 @@ import requests
 from slack_bolt import App
 import os
 
-# noinspection SpellCheckingInspection
 '''
 Export Slack and openweathermap API keys as follows:
 
