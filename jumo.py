@@ -10,8 +10,10 @@ export SLACK_BOT_TOKEN=xoxb-<your-bot-token>
 export SLACK_APP_TOKEN=<your-app-level-token>
 export openweathermap=<your-open-weather-map-token>
 '''
-
-app = App(token=os.environ['SLACK_BOT_TOKEN'], signing_secret=os.environ['SLACK_APP_TOKEN'])
+try:
+    app = App(token=os.environ['SLACK_BOT_TOKEN'], signing_secret=os.environ['SLACK_APP_TOKEN'])
+except KeyError:
+    print('Please export all api keys')
 
 
 @app.command("/jumo_weather")  # listen for "/jumo_weather" commands from slack
