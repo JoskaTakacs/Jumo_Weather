@@ -25,14 +25,13 @@ def slack_command(ack, respond, command, body):
 
 @app.command("/jumo_weather")
 def jumo_weather(ack, body):
-    print(body)
     city = body['text']
     weather = get_coordinates(city)  # Execute weather api to get coordinates of City.
     if len(weather.text) > 2:
         coordinates_json = json.loads(weather.text)
         lat = coordinates_json[0]['lat']
         lon = coordinates_json[0]['lon']
-        jumo_weather_results = get_City_Weather(lat, lon)  # Execute API call to get weather results from coordinates.
+        jumo_weather_results = get_city_weather(lat, lon)  # Execute API call to get weather results from coordinates.
         city_weather = json.loads(jumo_weather_results.text)
         user_id = body["user_id"]
         ack(f"Hi <@{user_id}>! Here are your results for {city_weather['name']}, "
@@ -47,14 +46,12 @@ def jumo_weather(ack, body):
 def get_coordinates(city, weather_api='285dbf4413858239fd0f0f786f9d7013'):
     r = requests.get(url='http://api.openweathermap.org/geo/1.0/direct',
                      params={'q': city, 'appid': weather_api})
-    print(r.status_code)
     return r
 
 
-def get_City_Weather(lat, lon, weather_api='285dbf4413858239fd0f0f786f9d7013'):
+def get_city_weather(lat, lon, weather_api='285dbf4413858239fd0f0f786f9d7013'):
     r = requests.get(url='http://api.openweathermap.org/data/2.5/weather',
                      params={'lat': lat, 'lon': lon, 'appid': weather_api})
-    print(f"get_City_Weather status_code: {r.status_code}")
     return r
 
 
