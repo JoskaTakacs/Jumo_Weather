@@ -29,23 +29,29 @@ def jumo_weather(ack, body):
         user_id = body["user_id"]
         ack(f"Hi <@{user_id}>! Here are your results for {city_weather['name']}, "
             f"{city_weather['sys']['country']}: "
-            f"{city_weather['weather'][0]['description']} "
-            f"and the temperature is: {round(city_weather['main']['temp'] - 273.15)}C."
-            f" The wind speed is: {city_weather['wind']['speed']}")
+            f"\nThe weather conditions are: {city_weather['weather'][0]['description']} \n"
+            f"\nand the temperature is: {round(city_weather['main']['temp'] - 273.15)}C.\n"
+            f"\nThe wind speed is: {city_weather['wind']['speed']}")
     else:
         ack("Invalid City. Please retry your request!")
 
 
 def get_coordinates(city, weather_api=os.environ['openweathermap']):
-    r = requests.get(url='http://api.openweathermap.org/geo/1.0/direct',
-                     params={'q': city, 'appid': weather_api})
-    return r
+    try:
+        r = requests.get(url='http://api.openweathermap.org/geo/1.0/direct',
+                         params={'q': city, 'appid': weather_api})
+        return r
+    except ConnectionError:
+        print('\nError connecting to http://api.openweathermap.org/geo/1.0/direct\n')
 
 
 def get_city_weather(lat, lon, weather_api=os.environ['openweathermap']):
-    r = requests.get(url='http://api.openweathermap.org/data/2.5/weather',
-                     params={'lat': lat, 'lon': lon, 'appid': weather_api})
-    return r
+    try:
+        r = requests.get(url='http://api.openweathermap.org/data/2.5/weather',
+                         params={'lat': lat, 'lon': lon, 'appid': weather_api})
+        return r
+    except ConnectionError:
+        print('\nError connecting to http://api.openweathermap.org/data/2.5/weather\n')
 
 
 if __name__ == "__main__":
