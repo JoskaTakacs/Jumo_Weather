@@ -1,6 +1,7 @@
 import json
 import requests
 from slack_bolt import App
+import os
 
 '''
 #https://slack.dev/bolt-python/tutorial/getting-started
@@ -10,8 +11,7 @@ from slack_bolt import App
 #export SLACK_APP_TOKEN=<your-app-level-token>
 '''
 
-app = App(token='xoxb-3207131180481-3218659194672-pib508Yfq30Hm08s5HN42D9e',
-          signing_secret='1336ff50a8a87e4e60b3da1a488b499d')
+app = App(token=os.environ['SLACK_BOT_TOKEN'], signing_secret=os.environ['SLACK_APP_TOKEN'])
 
 '''
 @app.command("/jumo_weather")
@@ -43,13 +43,13 @@ def jumo_weather(ack, body):
         ack("Invalid City. Please retry request your request!")
 
 
-def get_coordinates(city, weather_api='285dbf4413858239fd0f0f786f9d7013'):
+def get_coordinates(city, weather_api=os.environ['openweathermap']):
     r = requests.get(url='http://api.openweathermap.org/geo/1.0/direct',
                      params={'q': city, 'appid': weather_api})
     return r
 
 
-def get_city_weather(lat, lon, weather_api='285dbf4413858239fd0f0f786f9d7013'):
+def get_city_weather(lat, lon, weather_api=os.environ['openweathermap']):
     r = requests.get(url='http://api.openweathermap.org/data/2.5/weather',
                      params={'lat': lat, 'lon': lon, 'appid': weather_api})
     return r
