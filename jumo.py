@@ -40,7 +40,7 @@ def jumo_weather(ack, body):
             f"and the temperature is: {round(city_weather['main']['temp'] - 273.15)}C."
             f" The wind speed is: {city_weather['wind']['speed']}")
     else:
-        ack("Invalid City. Please retry request your request!")
+        ack("Invalid City. Please retry your request!")
 
 
 def get_coordinates(city, weather_api=os.environ['openweathermap']):
